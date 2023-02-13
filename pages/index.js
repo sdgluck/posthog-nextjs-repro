@@ -3,15 +3,16 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import {useEffect} from "react";
-import posthog from "posthog-js"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   useEffect(() => {
-    const enabled = posthog.isFeatureEnabled("test")
-    console.log("feature flag enabled:", enabled)
-  })
+    window.posthog.onFeatureFlags(() => {
+      const enabled = window.posthog.isFeatureEnabled("test")
+      console.log("feature flag enabled:", enabled)
+    })
+  }, [])
 
   return (
     <>
